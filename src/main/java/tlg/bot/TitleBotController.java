@@ -6,7 +6,7 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import tlg.bot.services.HtmlParserService;
 
-public class TitleBot extends TelegramLongPollingBot {
+public class TitleBotController extends TelegramLongPollingBot {
 
     private HtmlParserService htmlParserService = new HtmlParserService();
 
