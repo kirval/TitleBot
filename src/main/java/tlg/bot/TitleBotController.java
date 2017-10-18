@@ -4,21 +4,32 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import tlg.bot.services.Registration;
+import tlg.bot.services.Start;
 
-public class TitleBot extends TelegramLongPollingBot {
+public class TitleBotController extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
 
         if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equals("/start")){
-            String msgText = "TitleBot successfully started!";
-            long chatId = update.getMessage().getChatId();
 
-            SendMessage msg = new SendMessage()
-                    .setText(msgText)
-                    .setChatId(chatId);
+            SendMessage message = Start.getStartMessage(update);
+
 
             try{
-                execute(msg);
+                execute(message);
+            }
+            catch (TelegramApiException e){
+                e.printStackTrace();
+            }
+        }
+
+        else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equals("/registration")){
+
+            SendMessage message = Registration.getRegistrationMessage(update);
+
+            try{
+                execute(message);
             }
             catch (TelegramApiException e){
                 e.printStackTrace();
