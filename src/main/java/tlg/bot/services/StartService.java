@@ -3,7 +3,7 @@ package tlg.bot.services;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 
-public class Start {
+public class StartService {
 
     public static SendMessage getStartMessage(Update update){
         String msgText = "TitleBot успешно запущен!" +

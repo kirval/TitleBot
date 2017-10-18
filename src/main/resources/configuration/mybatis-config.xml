@@ -3,12 +3,9 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-    <properties resource="config.properties"> <!--ссылка на файл со свойствами(ссылка на СУБД, логин, пароль и тп.)-->
+    <properties resource="config.properties">
     </properties>
-    <settings><!--в данном блоке можно настроить много параметров. Полный список параметров http://mybatis.github.io/mybatis-3/configuration.html#settings-->
-        <setting name="logImpl" value="LOG4J"/>
-    </settings>
-    <environments default="development"><!--в данном блоке настраиваются подключения к БД-->
+    <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
@@ -19,7 +16,7 @@
             </dataSource>
         </environment>
     </environments>
-    <mappers><!--в данном блоке необходимо описать маперы, которые используются в проекте-->
+    <mappers>
         <mapper class="kz.jazzsoft.mapper.SubscriberMapper"/>
         <mapper class="kz.jazzsoft.mapper.TariffMapper"/>
         <mapper class="kz.jazzsoft.mapper.PaymentMapper"/>
