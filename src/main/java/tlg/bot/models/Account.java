@@ -1,18 +1,24 @@
 package tlg.bot.models;
 
-public class User {
-    private int id;
+public class Account {
+    private Integer telegramID;
     private String first_name;
-    // optional
     private String last_name;
     private String username;
 
-    public int getId() {
-        return id;
+    public Account(Integer telegramID, String first_name, String last_name, String username ){
+        this.setTelegramID(telegramID);
+        this.setFirst_name(first_name);
+        this.setLast_name(last_name);
+        this.setUsername(username);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getTelegramID() {
+        return telegramID;
+    }
+
+    public void setTelegramID(int telegramID) {
+        this.telegramID = telegramID;
     }
 
     public String getFirst_name() {
@@ -38,4 +44,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
+
+
 }
