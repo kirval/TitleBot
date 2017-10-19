@@ -2,13 +2,12 @@ package tlg.bot.services;
 
 
 import org.apache.ibatis.session.SqlSession;
+import org.postgresql.util.PSQLException;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
 import tlg.bot.mapper.AccountMapper;
 import tlg.bot.models.Account;
-
-import java.io.IOException;
 
 public class RegistrationService {
 
@@ -30,7 +29,7 @@ public class RegistrationService {
         }
         catch (Exception e){
             e.printStackTrace();
-            message.setText("Ошибка регистрации");
+            message.setText("Ошибка регистрации. Такой пользователь уже зарегестрирован!");
         }
         return message;
     }
