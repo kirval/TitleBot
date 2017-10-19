@@ -1,9 +1,7 @@
 package tlg.bot.services;
 
 
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.SqlSession;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
@@ -11,7 +9,6 @@ import tlg.bot.mapper.AccountMapper;
 import tlg.bot.models.Account;
 
 import java.io.IOException;
-import java.io.Reader;
 
 public class RegistrationService {
 
@@ -29,13 +26,11 @@ public class RegistrationService {
                 "\nВаше имя: " + user.getFirstName() +
                 "\nВаша фамилия: " + user.getLastName() +
                 "\nВаш никнейм: " + user.getUserName();
-        message
-                .setText(msgText);
+        message.setText(msgText);
         }
         catch (Exception e){
             e.printStackTrace();
-            message
-                    .setText("Ошибка регистрации");
+            message.setText("Ошибка регистрации");
         }
         return message;
     }
@@ -43,19 +38,17 @@ public class RegistrationService {
     public static void saveAccount(User user) {
 
         Account account = new Account(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
-
-        SqlSessionFactory sqlSessionFactory;
-        AccountMapper accountMapper;
-        Reader reader = null;
+        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 
         try{
-            reader = Resources.getResourceAsReader("configuration/mybatis-config.xml");
-            sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-            accountMapper = sqlSessionFactory.openSession().getMapper(AccountMapper.class);
-            accountMapper.insert(account);
+            AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+            accountMapper.insertAccount(account);
+            sqlSession.commit();
+
+            System.out.println(account.getTelegramID() + account.getFirst_name() + account.getLast_name() + account.getUsername());
         }
-        catch (IOException e){
-            e.printStackTrace();
+        finally {
+            sqlSession.close();
         }
     }
 

@@ -12,7 +12,7 @@
         <result property="username" column="username"/>
     </resultMap>
 
-    <insert id="insert" parameterType="tlg.bot.models.Account" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertAccount" parameterType="Account" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO userlist (telegram_id, first_name, last_name, username)
         VALUES (#{telegramID}, #{first_name}, #{last_name}, #{username});
     </insert>

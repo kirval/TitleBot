@@ -13,8 +13,8 @@ public class Account {
         this.setUsername(username);
     }
 
-    public int getTelegramID() {
-        return telegramID;
+    public Integer getTelegramID() {
+        return this.telegramID;
     }
 
     public void setTelegramID(int telegramID) {
@@ -22,7 +22,7 @@ public class Account {
     }
 
     public String getFirst_name() {
-        return first_name;
+        return this.first_name;
     }
 
     public void setFirst_name(String first_name) {
@@ -30,7 +30,7 @@ public class Account {
     }
 
     public String getLast_name() {
-        return last_name;
+        return this.last_name;
     }
 
     public void setLast_name(String last_name) {
@@ -38,7 +38,7 @@ public class Account {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
