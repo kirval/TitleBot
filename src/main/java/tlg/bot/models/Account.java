@@ -7,7 +7,7 @@ public class Account {
     private String first_name;
     private String last_name;
     private String username;
-    //private ArrayList<RequestHistory> requestHistory;
+    //private ArrayList<Request> requestHistory;
 
     public Account(Integer telegramID, String first_name, String last_name, String username) {
         this.telegramID = telegramID;
@@ -52,11 +52,11 @@ public class Account {
         this.telegramID = telegramID;
     }
 
-    //public ArrayList<RequestHistory> getRequestHistory() {
+    //public ArrayList<Request> getRequestHistory() {
      //   return requestHistory;
    //}
 
-    //public void setRequestHistory(ArrayList<RequestHistory> requestHistory) {
+    //public void setRequestHistory(ArrayList<Request> requestHistory) {
      //   this.requestHistory = requestHistory;
     //}
 }

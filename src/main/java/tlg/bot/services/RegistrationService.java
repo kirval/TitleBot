@@ -1,12 +1,10 @@
 package tlg.bot.services;
 
 
-import org.apache.ibatis.session.SqlSession;
-import org.postgresql.util.PSQLException;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.User;
-import tlg.bot.mapper.AccountMapper;
+import tlg.bot.mapper.AccountMapperImpl;
 import tlg.bot.models.Account;
 
 public class RegistrationService {
@@ -35,25 +33,11 @@ public class RegistrationService {
     }
 
     public static void saveAccount(User user) {
-
         Account account = new Account(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
-        AccountService accountService = new AccountService();
-/*        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        AccountMapperImpl accountMapper = new AccountMapperImpl();
 
-        try{
-            AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
-            accountMapper.insertAccount(account);
-            sqlSession.commit();
-
-            System.out.println(account.getTelegramID() + account.getFirst_name() + account.getLast_name() + account.getUsername());
-        }
-        finally {
-            sqlSession.close();
-        }*/
-
-        accountService.save(account);
+        accountMapper.insertAccount(account);
     }
-
 
     // ДОБАВИТЬ ЗАГЛУШКИ НА ОПЦИОНАЛЬНЫЕ ПОЛЯ USER
     

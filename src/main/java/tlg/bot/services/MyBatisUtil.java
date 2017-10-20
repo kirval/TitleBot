@@ -10,9 +10,7 @@ import java.io.Reader;
 public class MyBatisUtil {
     private static SqlSessionFactory sqlSessionFactory;
 
-    private MyBatisUtil(){
-
-    }
+    private MyBatisUtil(){}
 
     static {
         Reader reader = null;

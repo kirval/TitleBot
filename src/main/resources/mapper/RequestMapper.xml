@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="tlg.bot.mapper.RequestMapper">
+
+    <resultMap id="request" type="tlg.bot.models.Request">
+        <id property="id" column="id"/>
+        <result property="telegramID" column="user_telegram_id"/>
+        <result property="url" column="url"/>
+        <result property="title" column="title"/>
+    </resultMap>
+
+    <insert id="insertRequest" parameterType="Request" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO request_history (user_telegram_id, url, title)
+        VALUES (#{telegramID}, #{url}, #{title});
+    </insert>
+
+</mapper>
