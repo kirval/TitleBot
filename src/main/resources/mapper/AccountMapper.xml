@@ -17,4 +17,15 @@
         VALUES (#{telegramID}, #{first_name}, #{last_name}, #{username});
     </insert>
 
+<!--    <select id="getParseRequestHistory" resultType="StringResultMap">
+        SELECT requestHistory FROM userlist WHERE
+    </select>-->
+<!--    <select id="findAll">
+        SELECT * FROM userlist
+    </select>-->
+
+<!--    <select id="findById" parameterType="java.lang.Integer" resultMap="account">
+        SELECT * FROM userlist WHERE telegram_id = #{id}
+    </select>-->
+
 </mapper>

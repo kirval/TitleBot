@@ -37,7 +37,8 @@ public class RegistrationService {
     public static void saveAccount(User user) {
 
         Account account = new Account(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
-        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        AccountService accountService = new AccountService();
+/*        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
 
         try{
             AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
@@ -48,7 +49,9 @@ public class RegistrationService {
         }
         finally {
             sqlSession.close();
-        }
+        }*/
+
+        accountService.save(account);
     }
 
 

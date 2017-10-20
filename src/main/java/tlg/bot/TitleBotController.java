@@ -4,6 +4,9 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import tlg.bot.mapper.AccountMapper;
+import tlg.bot.models.RequestHistory;
+import tlg.bot.services.AccountService;
 import tlg.bot.services.HtmlParserService;
 import tlg.bot.services.RegistrationService;
 import tlg.bot.services.StartService;
@@ -11,6 +14,7 @@ import tlg.bot.services.StartService;
 public class TitleBotController extends TelegramLongPollingBot {
 
     private HtmlParserService htmlParserService = new HtmlParserService();
+    private AccountService accountService = new AccountService();
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -42,6 +46,9 @@ public class TitleBotController extends TelegramLongPollingBot {
             String url = msgText.replace("/parse ", "");
             long chatId = update.getMessage().getChatId();
             String title = htmlParserService.getTitleFromUrl(url);
+
+            RequestHistory requestHistory = new RequestHistory(update.getMessage().getFrom().getId(), url, title);
+
             String incrorrectUrl = "Incorrect url. Try again";
             SendMessage msg;
 
@@ -87,6 +94,6 @@ public class TitleBotController extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "463056223:AAExTo9qMPlLoX_BBWGwXrxhqX8uBbeQ6BI";
+        return "461612025:AAGHeK9ceer_fe4hk2FdRtcIu4YASVOEjwk";
     }
 }

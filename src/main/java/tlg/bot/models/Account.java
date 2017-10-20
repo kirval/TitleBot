@@ -1,16 +1,19 @@
 package tlg.bot.models;
 
+import java.util.ArrayList;
+
 public class Account {
     private Integer telegramID;
     private String first_name;
     private String last_name;
     private String username;
+    //private ArrayList<RequestHistory> requestHistory;
 
-    public Account(Integer telegramID, String first_name, String last_name, String username ){
-        this.setTelegramID(telegramID);
-        this.setFirst_name(first_name);
-        this.setLast_name(last_name);
-        this.setUsername(username);
+    public Account(Integer telegramID, String first_name, String last_name, String username) {
+        this.telegramID = telegramID;
+        this.first_name = first_name;
+        this.last_name = last_name;
+        this.username = username;
     }
 
     public Integer getTelegramID() {
@@ -45,5 +48,15 @@ public class Account {
         this.username = username;
     }
 
+    public void setTelegramID(Integer telegramID) {
+        this.telegramID = telegramID;
+    }
 
+    //public ArrayList<RequestHistory> getRequestHistory() {
+     //   return requestHistory;
+   //}
+
+    //public void setRequestHistory(ArrayList<RequestHistory> requestHistory) {
+     //   this.requestHistory = requestHistory;
+    //}
 }
