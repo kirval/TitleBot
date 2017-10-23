@@ -52,6 +52,7 @@ public class TitleBotController extends TelegramLongPollingBot {
             }
         }
 
+
         else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().startsWith("/history")){
 
             SendMessage message = HistoryService.getHistoryMessage(update);

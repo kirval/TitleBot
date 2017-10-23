@@ -19,6 +19,7 @@ public interface AccountMapper {
     })
     List<Request> selectRequestsByAccountId(Integer id);
 
+
     @Select("SELECT * FROM request_history WHERE user_telegram_id = #{id} ORDER BY id  DESC  LIMIT 10")
     List<Request> selectTop10RequestsByAccountId(Integer id);
 }

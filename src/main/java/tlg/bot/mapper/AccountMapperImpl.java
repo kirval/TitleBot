@@ -26,6 +26,7 @@ public class AccountMapperImpl implements AccountMapper{
         return requests;
     }
 
+
     @Override
     public List<Request> selectTop10RequestsByAccountId(Integer id) {
         List<Request> requests = accountMapper.selectTop10RequestsByAccountId(id);
