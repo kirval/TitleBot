@@ -4,9 +4,16 @@ import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import tlg.bot.mapper.AccountMapper;
+import tlg.bot.mapper.AccountMapperImpl;
+import tlg.bot.models.Request;
+import tlg.bot.services.HistoryService;
 import tlg.bot.services.ParseService;
 import tlg.bot.services.RegistrationService;
 import tlg.bot.services.StartService;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TitleBotController extends TelegramLongPollingBot {
 
@@ -45,6 +52,16 @@ public class TitleBotController extends TelegramLongPollingBot {
             }
         }
 
+        else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().startsWith("/history")){
+
+            SendMessage message = HistoryService.getHistoryMessage(update);
+            try {
+                execute(message);
+            } catch (TelegramApiException e){
+                e.printStackTrace();
+            }
+        }
+
         else if(update.hasMessage() && update.getMessage().hasText()){
             String msgText = update.getMessage().getText();
             long chatId = update.getMessage().getChatId();
@@ -71,6 +88,6 @@ public class TitleBotController extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "463056223:AAExTo9qMPlLoX_BBWGwXrxhqX8uBbeQ6BI";
+        return "461612025:AAGHeK9ceer_fe4hk2FdRtcIu4YASVOEjwk";
     }
 }

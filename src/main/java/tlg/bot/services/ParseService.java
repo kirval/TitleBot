@@ -4,8 +4,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
-import tlg.bot.mapper.RequestMapperImpl;
 import tlg.bot.models.Request;
+import tlg.bot.mapper.RequestMapperImpl;
 
 public class ParseService {
 

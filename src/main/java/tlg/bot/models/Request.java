@@ -1,14 +1,23 @@
 package tlg.bot.models;
 
 public class Request {
+    private Integer id;
     private Integer telegramID;
     private String url;
     private String title;
+
+    public Request(Integer id, Integer telegramID, String url, String title) {
+        this.id = id;
+        this.telegramID = telegramID;
+        this.url = url;
+        this.title = title;
+    }
 
     public Request(Integer telegramID, String url, String title) {
         this.telegramID = telegramID;
         this.url = url;
         this.title = title;
+
     }
 
     public String getUrl() {
@@ -33,5 +42,18 @@ public class Request {
 
     public void setTelegramID(Integer telegramID) {
         this.telegramID = telegramID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Url: " + getUrl() + ", Title: " + getTitle();
     }
 }

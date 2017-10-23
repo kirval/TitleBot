@@ -10,9 +10,9 @@ CREATE TABLE userlist
 CREATE TABLE request_history
 (
   id SERIAL NOT NULL ,
-  user_telegram_id INTEGER      NOT NULL, --REFERENCES userlist(telegram_id)--
+  user_telegram_id INTEGER      NOT NULL REFERENCES userlist(telegram_id),
   url         VARCHAR(200) NOT NULL,
-  title       VARCHAR(50)  NOT NULL
+  title       VARCHAR(200)  NOT NULL
 );
 
 
