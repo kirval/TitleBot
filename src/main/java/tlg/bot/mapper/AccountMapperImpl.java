@@ -10,27 +10,25 @@ import java.util.List;
 
 public class AccountMapperImpl implements AccountMapper{
 
-    private static SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-    private static AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
-
     @Override
     public void insertAccount(Account account) {
+        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+
         accountMapper.insertAccount(account);
+
         sqlSession.commit();
+        sqlSession.close();
     }
 
     @Override
-    public List<Request> selectRequestsByAccountId(Integer id) {
-        List<Request> requests = accountMapper.selectRequestsByAccountId(id);
-        sqlSession.commit();
-        return requests;
-    }
+    public Account findByTelegramID(Integer telegramID) {
+        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+        AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
 
+        Account account = accountMapper.findByTelegramID(telegramID);
 
-    @Override
-    public List<Request> selectTop10RequestsByAccountId(Integer id) {
-        List<Request> requests = accountMapper.selectTop10RequestsByAccountId(id);
-        sqlSession.commit();
-        return requests;
+        sqlSession.close();
+        return account;
     }
 }

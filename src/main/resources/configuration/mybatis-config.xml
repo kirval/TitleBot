@@ -5,10 +5,6 @@
 <configuration>
     <properties resource="configuration/config.properties">
     </properties>
-    <typeAliases>
-        <typeAlias type='tlg.bot.models.Account' alias='Account'></typeAlias>
-        <typeAlias type='tlg.bot.models.Request' alias='Request'></typeAlias>
-    </typeAliases>
     <environments default="development">
         <environment id="development">
             <transactionManager type="JDBC"/>
@@ -21,7 +17,7 @@
         </environment>
     </environments>
     <mappers>
-        <mapper resource="mapper/AccountMapper.xml"/>
-        <mapper resource="mapper/RequestMapper.xml"/>
+        <mapper class="tlg.bot.mapper.AccountMapper"/>
+        <mapper class="tlg.bot.mapper.RequestMapper"/>
     </mappers>
 </configuration>

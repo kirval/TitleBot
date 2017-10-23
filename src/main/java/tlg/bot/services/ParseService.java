@@ -13,7 +13,7 @@ public class ParseService {
         String messageText = update.getMessage().getText();
         String url = messageText.replace("/parse ", "");
         String title = getTitleFromDocument(url);
-        String incorrectUrl = "Неверный адрес. Попробуйте другой";
+        String incorrectUrl = "Неверный адрес. Попробуйте другой.";
         long chatId = update.getMessage().getChatId();
 
         SendMessage message = new SendMessage().setChatId(chatId);
