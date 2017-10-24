@@ -10,25 +10,51 @@ import java.util.List;
 
 public class AccountMapperImpl implements AccountMapper{
 
+    SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+    AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+
     @Override
     public void insertAccount(Account account) {
-        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-        AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
-
         accountMapper.insertAccount(account);
-
         sqlSession.commit();
-        sqlSession.close();
     }
 
     @Override
     public Account findByTelegramID(Integer telegramID) {
-        SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-        AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
-
         Account account = accountMapper.findByTelegramID(telegramID);
-
-        sqlSession.close();
+        sqlSession.commit();
         return account;
+    }
+
+    @Override
+    public List<Account> findAllAccounts() {
+        List<Account> accounts = accountMapper.findAllAccounts();
+        sqlSession.commit();
+        return accounts;
+    }
+
+    @Override
+    public Account findById(Integer id) {
+        Account account = accountMapper.findById(id);
+        sqlSession.commit();
+        return account;
+    }
+
+    @Override
+    public void delete(Integer id) {
+        accountMapper.delete(id);
+        sqlSession.commit();
+    }
+
+    @Override
+    public void deleteByTelegramId(Integer id) {
+        accountMapper.deleteByTelegramId(id);
+        sqlSession.commit();
+    }
+
+    @Override
+    public void update(Account account) {
+        accountMapper.update(account);
+        sqlSession.commit();
     }
 }

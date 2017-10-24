@@ -54,6 +54,6 @@ public class Request {
 
     @Override
     public String toString() {
-        return "Url: " + getUrl() + ", Title: " + getTitle();
+        return "Url: " + this.url + ", Title: " + this.title;
     }
 }

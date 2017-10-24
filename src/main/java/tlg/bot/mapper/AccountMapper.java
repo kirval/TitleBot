@@ -1,10 +1,9 @@
 package tlg.bot.mapper;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import tlg.bot.models.Account;
+
+import java.util.List;
 
 
 public interface AccountMapper {
@@ -19,8 +18,26 @@ public interface AccountMapper {
             "VALUES (#{telegramID}, #{first_name}, #{last_name}, #{username});")
     void insertAccount(Account account);
 
+
+    @Select("SELECT * FROM userlist")
+    List<Account> findAllAccounts();
+
+    @Select("SELECT telegram_id, first_name, last_name, username " +
+            "FROM userlist WHERE id = #{id}")
+    Account findById(Integer id);
+
     @Select("SELECT telegram_id, first_name, last_name, username " +
             "FROM userlist WHERE telegram_id = #{telegramID}")
     Account findByTelegramID(Integer telegramID);
+
+    @Delete("DELETE FROM userlist WHERE id= #{id}")
+    void delete(Integer id);
+
+    @Delete("DELETE FROM userlist WHERE telegram_id = #{id}")
+    void deleteByTelegramId(Integer id);
+
+    @Update("UPDATE userlist SET first_name=#{first_name}, last_name=#{last_name}, username = #{username}")
+    void update(Account account);
+
 
 }

@@ -31,4 +31,29 @@ public class RequestMapperImpl implements RequestMapper {
         sqlSession.commit();
         return requests;
     }
+
+    @Override
+    public List<Request> findAllRequests() {
+        List<Request> requests = requestMapper.findAllRequests();
+        sqlSession.commit();
+        return requests;
+    }
+
+    @Override
+    public void update(Request request) {
+        requestMapper.update(request);
+        sqlSession.commit();
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        requestMapper.deleteById(id);
+        sqlSession.commit();
+    }
+
+    @Override
+    public void deleteByTelegramId(Integer telegram_id) {
+        requestMapper.deleteByTelegramId(telegram_id);
+        sqlSession.commit();
+    }
 }
