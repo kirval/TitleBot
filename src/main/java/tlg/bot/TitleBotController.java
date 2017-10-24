@@ -65,6 +65,16 @@ public class TitleBotController extends TelegramLongPollingBot {
                     e.printStackTrace();
                 }
             }
+
+            else if(update.hasMessage() && update.getMessage().hasText()){
+                message.setText("Используйте команды из списка /start");
+                try {
+                    execute(message);
+                }
+                catch (TelegramApiException e){
+                    e.printStackTrace();
+                }
+            }
         }
 
         else {
