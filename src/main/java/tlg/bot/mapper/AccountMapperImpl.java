@@ -10,8 +10,8 @@ import java.util.List;
 
 public class AccountMapperImpl implements AccountMapper{
 
-    SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
-    AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
+    private SqlSession sqlSession = MyBatisUtil.getSqlSessionFactory().openSession();
+    private AccountMapper accountMapper = sqlSession.getMapper(AccountMapper.class);
 
     @Override
     public void insertAccount(Account account) {
