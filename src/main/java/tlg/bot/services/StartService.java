@@ -5,7 +5,17 @@ import org.telegram.telegrambots.api.objects.Update;
 
 public class StartService {
 
-    public static SendMessage getStartMessage(Update update){
+    private Update update;
+
+    public void setUpdate(Update update) {
+        this.update = update;
+    }
+
+    public StartService(Update update){
+        setUpdate(update);
+    }
+
+    public SendMessage getStartMessage(){
         String msgText = "Вас приветствует TitleBot!" +
                 "\n-- Для использования команд бота зарегистрируйтесь /registration" +
                 "\n-- Для получения названия страницы используйте /parse <ссылка на страницу>" +
@@ -17,4 +27,6 @@ public class StartService {
                 .setChatId(chatId);
         return message;
     }
+
+
 }

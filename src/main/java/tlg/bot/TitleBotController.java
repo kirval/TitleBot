@@ -23,7 +23,8 @@ public class TitleBotController extends TelegramLongPollingBot {
         SendMessage message = new SendMessage().setChatId(update.getMessage().getChatId());
 
         if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equals("/start")){
-            message = StartService.getStartMessage(update);
+            StartService startService = new StartService(update);
+            message = startService.getStartMessage();
 
             try{
                 execute(message);
@@ -34,7 +35,8 @@ public class TitleBotController extends TelegramLongPollingBot {
         }
 
         else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equals("/registration")){
-            message = RegistrationService.getRegistrationMessage(update);
+            RegistrationService registrationService = new RegistrationService(update);
+            message = registrationService.getRegistrationMessage();
 
             try{
                 execute(message);
@@ -47,7 +49,9 @@ public class TitleBotController extends TelegramLongPollingBot {
         else if(RegistrationService.isRegistered(update.getMessage().getFrom())){
 
             if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().startsWith("/parse")){
-                message = ParseService.getParseMessage(update);
+                ParseService parseService = new ParseService(update);
+                message = parseService.getParseMessage();
+
                 try {
                     execute(message);
                 }
@@ -56,8 +60,10 @@ public class TitleBotController extends TelegramLongPollingBot {
                 }
             }
 
-            else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().startsWith("/history")){
-                message = HistoryService.getHistoryMessage(update);
+            else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().equals("/history")){
+                HistoryService historyService = new HistoryService(update);
+                message = historyService.getHistoryMessage();
+
                 try {
                     execute(message);
                 }
@@ -68,6 +74,7 @@ public class TitleBotController extends TelegramLongPollingBot {
 
             else if(update.hasMessage() && update.getMessage().hasText()){
                 message.setText("Используйте команды из списка /start");
+
                 try {
                     execute(message);
                 }
@@ -79,6 +86,7 @@ public class TitleBotController extends TelegramLongPollingBot {
 
         else {
             message.setText("Для использоваия бота зарегистрируйтесь!");
+
             try {
                 execute(message);
             }

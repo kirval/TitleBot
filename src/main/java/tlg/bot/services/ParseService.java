@@ -9,11 +9,31 @@ import tlg.bot.mapper.RequestMapperImpl;
 
 public class ParseService {
 
-    public static SendMessage getParseMessage(Update update){
-        String messageText = update.getMessage().getText();
-        String url = messageText.replace("/parse ", "");
-        String title = getTitleFromDocument(url);
-        String incorrectUrl = "Неверный адрес. Попробуйте другой.";
+    private Update update;
+    private String url;
+    private String title;
+    private static final String incorrectUrl = "Неверный адрес. Попробуйте другой.";
+
+    public void setUpdate(Update update) {
+        this.update = update;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public ParseService(Update update){
+        setUpdate(update);
+        setUrl(update.getMessage().getText().replace("/parse ", ""));
+        setTitle(null);
+    }
+
+    public SendMessage getParseMessage(){
+        title = getTitleFromDocument();
         long chatId = update.getMessage().getChatId();
 
         SendMessage message = new SendMessage().setChatId(chatId);
@@ -28,7 +48,16 @@ public class ParseService {
         return message;
     }
 
-    public static Document getDocumentFromUrl(String url) {
+    public String getTitleFromDocument() {
+        Document doc = getDocumentFromUrl();
+        if(doc != null) {
+            String title = doc.title();
+            return title;
+        }
+        else return null;
+    }
+
+    public Document getDocumentFromUrl() {
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
@@ -39,20 +68,8 @@ public class ParseService {
         return doc;
     }
 
-    public static String getTitleFromDocument(String url) {
-        Document doc = getDocumentFromUrl(url);
-        if(doc != null) {
-            String title = doc.title();
-            return title;
-        }
-        else return null;
-    }
-
-
-
-    public static void saveRequest(Request request){
+    public void saveRequest(Request request){
         RequestMapperImpl requestMapper = new RequestMapperImpl();
         requestMapper.insertRequest(request);
     }
-
 }

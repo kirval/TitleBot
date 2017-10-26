@@ -10,14 +10,29 @@ import tlg.bot.models.Account;
 
 public class RegistrationService {
 
-    public static SendMessage getRegistrationMessage(Update update) {
+    private Update update;
+    private User user;
+
+    public void setUpdate(Update update) {
+        this.update = update;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public RegistrationService(Update update){
+        setUpdate(update);
+        setUser(update.getMessage().getFrom());
+    }
+
+    public  SendMessage getRegistrationMessage() {
 
         long chatId = update.getMessage().getChatId();
         SendMessage message = new SendMessage().setChatId(chatId);
-        User user = update.getMessage().getFrom();
 
         try{
-            saveAccount(user);
+            saveAccount();
 
             String msgText = "Вы успешно зарегестрировались!" +
                     "\nВаш ID: " + user.getId() +
@@ -33,7 +48,7 @@ public class RegistrationService {
         return message;
     }
 
-    public static void saveAccount(User user) {
+    public void saveAccount() {
         Account account = new Account(user.getId(), user.getFirstName(), user.getLastName(), user.getUserName());
         AccountMapperImpl accountMapper = new AccountMapperImpl();
 
@@ -56,6 +71,7 @@ public class RegistrationService {
         }
         return isRegistered;
     }
+
 
     // ДОБАВИТЬ ЗАГЛУШКИ НА ОПЦИОНАЛЬНЫЕ ПОЛЯ USER
 
