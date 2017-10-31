@@ -1,5 +1,8 @@
 package tlg.bot;
 
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -12,7 +15,7 @@ import tlg.bot.services.ParseService;
 import tlg.bot.services.RegistrationService;
 import tlg.bot.services.StartService;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TitleBotController extends TelegramLongPollingBot {
@@ -72,6 +75,24 @@ public class TitleBotController extends TelegramLongPollingBot {
                 }
             }
 
+            else if(update.hasMessage() && update.getMessage().hasText() && update.getMessage().getText().startsWith("/pars1")){
+                ParseService parseService = new ParseService(update);
+                Document document = parseService.getDocumentFromUrl();
+                Map<String, Elements> map = parseService.groupSimilarElements(document);
+                Set<String> links = new HashSet<>();
+                for (Map.Entry<String, Elements> entry : map.entrySet()) {
+                    links.add(entry.getValue().get(0).attr("abs:href"));
+                }
+                SendMessage sendMessage = new SendMessage();
+                sendMessage.setChatId(update.getMessage().getChatId()).setText(links.toString());
+
+                try {
+                    execute(sendMessage);
+                } catch (TelegramApiException e) {
+                    e.printStackTrace();
+                }
+            }
+
             else if(update.hasMessage() && update.getMessage().hasText()){
                 message.setText("Используйте команды из списка /start");
 
@@ -104,6 +125,6 @@ public class TitleBotController extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        return "463056223:AAExTo9qMPlLoX_BBWGwXrxhqX8uBbeQ6BI";
+        return "461612025:AAGHeK9ceer_fe4hk2FdRtcIu4YASVOEjwk";
     }
 }
