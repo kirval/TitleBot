@@ -1,18 +1,23 @@
-package tlg.bot;
+package tlg.bot.services;
 
+import lombok.Data;
+import org.apache.commons.validator.routines.UrlValidator;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Main2 {
 
-    public static void main(String[] args) {
-        String url = "http://irr.by/servicesandbusiness/transportation/";  //"https://www.ebay.com/sch/Cell-Phones-Smartphones-/9355/i.html";
+public class ParseService2 {
 
+    public Map<Element, Elements> getOrdersGroup(String url){
+        if (!isValidUrl(url)){
+            return null;
+        }
 
         Document document = getDocumentFromUrl(url);
 
@@ -23,37 +28,35 @@ public class Main2 {
         Elements links = elements.select("a[href]");
         removeUselessLinks(links);
 
-       // Map<Element, Elements> map = groupByFirstSameParent(links);
+        Map<Element, Elements> map = groupByFirstSameParent(links);
 
-      //  System.out.println(map.size());
+        return map;
     }
 
-    private static Element findKeyOfTheBiggestGroup(Map<Element, Elements> map) {
-        int maxSize = Integer.MIN_VALUE;
-        Element element = null;
-        for(Map.Entry<Element, Elements> entry: map.entrySet()) {
-            if(entry.getValue().size() > maxSize) {
-                maxSize = entry.getValue().size();
-                element = entry.getKey();
-            }
+    public String getTitle(String url) {
+        if(isValidUrl(url)) {
+            Document document = getDocumentFromUrl(url);
+            if(document != null) {
+                String title = document.title();
+                return title;
+            } else return null;
         }
-        return element;
+        else return null;
     }
 
-    public static void removeUselessLinks(Elements elements) {
+    public Boolean isValidUrl(String url) {
+        UrlValidator urlValidator = new UrlValidator();
+        return urlValidator.isValid(url);
+    }
 
+    private void removeUselessLinks(Elements elements) {
         elements.removeIf(a ->
                 a.select("img").isEmpty() || a.attr("abs:href").endsWith(".img") || a.attr("abs:href").endsWith(".jpg") || a.attr("abs:href").isEmpty()
                         || a.attr("abs:href").endsWith(".css") || a.attr("href").startsWith("#") || elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() <= 1);
         elements.removeIf(a -> elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() > 1);
-        //elements.stream().filter(a -> a.getElementsByAttribute("abs:href").size() > 1);
-        System.out.println(elements.size());
-
-
-        elements.forEach(a -> System.out.println(a.attr("href")));
     }
 
-    public static Document getDocumentFromUrl(String url) {
+    private Document getDocumentFromUrl(String url) {
         Document doc = null;
         try {
             doc = Jsoup.connect(url).get();
@@ -64,7 +67,7 @@ public class Main2 {
         return doc;
     }
 
-/*    public static Map<Element, Elements> groupByFirstSameParent(Elements elements) {
+    private Map<Element, Elements> groupByFirstSameParent(Elements elements) {
         Map<Element, Elements> map = new HashMap<>();
         for (Element element1: elements) {
             for (Element element2: elements){
@@ -93,9 +96,9 @@ public class Main2 {
             }
         }
         return map;
-    }*/
+    }
 
-    public static Boolean haveSameParent(Elements parents1, Elements parents2) {
+    private Boolean haveSameParent(Elements parents1, Elements parents2) {
         for (int i = 0; i < parents1.size() && i < parents2.size(); i++) {
             if(parents1.get(i) == parents2.get(i)){
                 return true;
@@ -104,7 +107,7 @@ public class Main2 {
         return false;
     }
 
-    public static Element getSameParent(Elements parents1, Elements parents2) {
+    private Element getSameParent(Elements parents1, Elements parents2) {
         for (int i = 0; i < parents1.size() && i < parents2.size(); i++) {
             if(parents1.get(i) == parents2.get(i)){
                 return parents1.get(i);
@@ -112,5 +115,4 @@ public class Main2 {
         }
         return null;
     }
-
 }
