@@ -16,21 +16,39 @@ public class ParseService2 {
 
     public Map<Element, Elements> getOrdersGroup(String url){
         if (!isValidUrl(url)){
+            System.out.println("INVALID URL");
             return null;
         }
 
+        System.out.println(url);
+
         Document document = getDocumentFromUrl(url);
 
-        document.getElementsByTag("header").remove();
-        document.getElementsByTag("footer").remove();
+        /*document.getElementsByTag("header").remove();
+        document.getElementsByTag("footer").remove();*/
 
         Elements elements = document.body().getAllElements();
-        Elements links = elements.select("a[href]");
+        Elements links = document.getAllElements().select("a[href]");
+        System.out.println(links.size());
         removeUselessLinks(links);
+        System.out.println(links.size());
 
         Map<Element, Elements> map = groupByFirstSameParent(links);
 
         return map;
+    }
+
+    public String getOrdersGroupAsString(String url) {
+        Map<Element, Elements> orders = getOrdersGroup(url);
+        StringBuilder orderLinksBuilder = new StringBuilder();
+
+        for (Map.Entry<Element, Elements> entry: orders.entrySet()) {
+
+            System.out.println(entry.getValue().size());
+            entry.getValue().forEach(a -> orderLinksBuilder.append("\n").append(a.attr("abs:href")));
+        }
+
+        return orderLinksBuilder.toString();
     }
 
     public String getTitle(String url) {
@@ -51,8 +69,8 @@ public class ParseService2 {
 
     private void removeUselessLinks(Elements elements) {
         elements.removeIf(a ->
-                a.select("img").isEmpty() || a.attr("abs:href").endsWith(".img") || a.attr("abs:href").endsWith(".jpg") || a.attr("abs:href").isEmpty()
-                        || a.attr("abs:href").endsWith(".css") || a.attr("href").startsWith("#") || elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() <= 1);
+                a.select("img").isEmpty() || a.attr("href").endsWith(".img") || a.attr("abs:href").endsWith(".jpg") || a.attr("abs:href").isEmpty()
+                        || a.attr("href").endsWith(".css") || a.attr("href").startsWith("#") || elements.select("a[href=\"" + a.attr("href") + "\"]").size() <= 1);
         elements.removeIf(a -> elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() > 1);
     }
 
@@ -96,6 +114,12 @@ public class ParseService2 {
             }
         }
         return map;
+    }
+
+    private Map.Entry<Element, Elements> groupOrders(Elements elements) {
+        Map.Entry<Element, Elements> entry;
+
+        return null;
     }
 
     private Boolean haveSameParent(Elements parents1, Elements parents2) {
