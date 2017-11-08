@@ -20,19 +20,15 @@ public class ParseService2 {
             return null;
         }
 
-        System.out.println(url);
-
         Document document = getDocumentFromUrl(url);
-
-        /*document.getElementsByTag("header").remove();
-        document.getElementsByTag("footer").remove();*/
+        document.getElementsByTag("header").remove();
+        document.getElementsByTag("footer").remove();
 
         Elements elements = document.body().getAllElements();
-        Elements links = document.getAllElements().select("a[href]");
-        System.out.println(links.size());
-        removeUselessLinks(links);
-        System.out.println(links.size());
+        Elements links = elements.select("a[href]");
+       // Elements links2 =  document.getElementsByAttribute("abs:href");
 
+        removeUselessLinks(links);
         Map<Element, Elements> map = groupByFirstSameParent(links);
 
         return map;
@@ -68,10 +64,30 @@ public class ParseService2 {
     }
 
     private void removeUselessLinks(Elements elements) {
+        System.out.println(elements.size());
+        elements.forEach( a -> {
+            String attr = a.attr("abs:href");
+            if(!attr.isEmpty()) {
+                a.attr(attr, removeQueryString(attr));
+            }
+        });
+
         elements.removeIf(a ->
-                a.select("img").isEmpty() || a.attr("href").endsWith(".img") || a.attr("abs:href").endsWith(".jpg") || a.attr("abs:href").isEmpty()
-                        || a.attr("href").endsWith(".css") || a.attr("href").startsWith("#") || elements.select("a[href=\"" + a.attr("href") + "\"]").size() <= 1);
-        elements.removeIf(a -> elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() > 1);
+                a.select("img").isEmpty()   || a.attr("abs:href").isEmpty()
+                          || elements.select("a[href=\"" + a.attr("abs:href") + "\"]").size() <= 1);
+    }
+
+    private String removeQueryString(String theURL) {
+        int endPos;
+        if (theURL.indexOf("?") > 0) {
+            endPos = theURL.indexOf("?");
+        } else if (theURL.indexOf("#") > 0) {
+            endPos = theURL.indexOf("#");
+        } else {
+            endPos = theURL.length();
+        }
+
+        return theURL.substring(0, endPos);
     }
 
     private Document getDocumentFromUrl(String url) {
