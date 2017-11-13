@@ -1,27 +1,25 @@
 package tlg.bot.models;
 
-import java.util.ArrayList;
-
 public class Account {
-    private Integer telegramID;
+    private Integer telegramId;
     private String first_name;
     private String last_name;
     private String username;
     //private ArrayList<Request> requestHistory;
 
-    public Account(Integer telegramID, String first_name, String last_name, String username) {
-        this.telegramID = telegramID;
+    public Account(Integer telegramId, String first_name, String last_name, String username) {
+        this.telegramId = telegramId;
         this.first_name = first_name;
         this.last_name = last_name;
         this.username = username;
     }
 
-    public Integer getTelegramID() {
-        return this.telegramID;
+    public Integer getTelegramId() {
+        return this.telegramId;
     }
 
-    public void setTelegramID(int telegramID) {
-        this.telegramID = telegramID;
+    public void setTelegramId(int telegramId) {
+        this.telegramId = telegramId;
     }
 
     public String getFirst_name() {
@@ -49,7 +47,7 @@ public class Account {
     }
 
     public void setTelegramID(Integer telegramID) {
-        this.telegramID = telegramID;
+        this.telegramId = telegramID;
     }
 
     //public ArrayList<Request> getRequestHistory() {

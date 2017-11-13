@@ -19,5 +19,7 @@
     <mappers>
         <mapper class="tlg.bot.mapper.AccountMapper"/>
         <mapper class="tlg.bot.mapper.RequestMapper"/>
+        <mapper class="tlg.bot.mapper.OrderMapper"/>
+        <mapper class="tlg.bot.mapper.SelectorMapper"/>
     </mappers>
 </configuration>
