@@ -16,7 +16,7 @@ public class ParseService2 {
 
     public Map<Element, Elements> getOrdersGroup(String url){
         if (!isValidUrl(url)){
-            System.out.println("INVALID URL");
+            System.out.println("INVALID URL:" + url);
             return null;
         }
 
