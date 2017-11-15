@@ -9,6 +9,7 @@ public interface SelectorMapper {
 
     @Results(value = {
             @Result(property = "id",column = "id"),
+            @Result(property = "elementId", column = "element_id"),
             @Result(property = "telegramId", column = "telegramId"),
             @Result(property = "url", column = "url")
     })
@@ -21,7 +22,7 @@ public interface SelectorMapper {
     @Select("SELECT * FROM Selector")
     List<Selector> findAllSelectors();
 
-    @Insert("INSERT INTO Selector (telegram_id, url) VALUES (#{telegramId}, #{url});")
+    @Insert("INSERT INTO Selector (telegram_id, elementId, url) VALUES (#{telegramId}, #{elementId}, #{url});")
     void insertSelector(Selector selector);
 
     @Update("UPDATE Selector SET url=#{url}")

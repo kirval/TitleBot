@@ -72,7 +72,7 @@ public class UpdateHandlerImpl implements UpdateHandler{
                     for (Map.Entry<Element, Elements> entry : orders.entrySet()) {
                         rowInline.add(new InlineKeyboardButton()
                                 .setText(entry.getValue().first().attr("abs:href"))
-                                .setCallbackData(String.valueOf(entry.getKey().hashCode())));
+                                .setCallbackData(String.valueOf(entry.getKey().id()))); //klhkljklj
                         rowsInline.add(rowInline);
                     }
                     keyboardMarkup.setKeyboard(rowsInline);
@@ -95,7 +95,7 @@ public class UpdateHandlerImpl implements UpdateHandler{
             long chatId = update.getCallbackQuery().getMessage().getChatId();
 
             for (Map.Entry<Element, Elements> entry: orders.entrySet()) {
-                if(callData.equals(String.valueOf(entry.getKey().hashCode()))) {
+                if(callData.equals(String.valueOf(entry.getKey().id()))) { ///klhjkljkl
                     String answer = "Следим за новыми товарами";
                     Selector selector = new Selector(update.getMessage().getChatId(), query);
                     selectorMapper.insertSelector(selector);

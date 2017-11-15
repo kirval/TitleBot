@@ -2,6 +2,7 @@ package tlg.bot.models;
 
 public class Selector {
     private Integer id;
+    private String elementId;
     private Long telegramId;
     private String url;
 
@@ -14,6 +15,14 @@ public class Selector {
         this.id = id;
         this.telegramId = telegramId;
         this.url = url;
+    }
+
+    public String getElementId() {
+        return elementId;
+    }
+
+    public void setElementId(String elementId) {
+        this.elementId = elementId;
     }
 
     public Integer getId() {

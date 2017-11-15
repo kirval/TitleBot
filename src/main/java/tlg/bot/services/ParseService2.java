@@ -9,6 +9,7 @@ import org.jsoup.select.Elements;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,6 +33,19 @@ public class ParseService2 {
         Map<Element, Elements> map = groupByFirstSameParent(links);
 
         return map;
+    }
+
+    public Elements getOrders(String url, String elementId) {
+        if (!isValidUrl(url)){
+            System.out.println("INVALID URL:" + url);
+            return null;
+        }
+
+        Document document = getDocumentFromUrl(url);
+        Elements elements = document.getElementById(elementId).select("a[href]");
+        removeUselessLinks(elements);
+
+        return elements;
     }
 
     public String getOrdersGroupAsString(String url) {
@@ -130,12 +144,6 @@ public class ParseService2 {
             }
         }
         return map;
-    }
-
-    private Map.Entry<Element, Elements> groupOrders(Elements elements) {
-        Map.Entry<Element, Elements> entry;
-
-        return null;
     }
 
     private Boolean haveSameParent(Elements parents1, Elements parents2) {

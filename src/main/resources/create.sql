@@ -18,6 +18,7 @@ CREATE TABLE request_history
 CREATE TABLE selector
 (
   id SERIAL NOT NULL PRIMARY KEY ,
+  elementId VARCHAR(100) NOT NULL ,
   telegram_id INTEGER NOT NULL REFERENCES userlist(telegram_id),
   url VARCHAR(550) NOT NULL
 );
